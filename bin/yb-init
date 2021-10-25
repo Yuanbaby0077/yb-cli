@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const chalk = require('chalk')
+const ora = require('ora')
+const download = require('download-git-repo')
+const tpl = require(`${__dirname}/../template`)
+
+program
+  .usage('<templateName> [projectName]')
+
+program.parse(process.argv)
+
+if (program.args.length === 0) return program.help()
+
+const [tplName, pName] = program.args
+
+if (!tpl[tplName]) {
+  console.log(chalk.red('template does`t exist!'))
+  return
+}
+
+if (!pName) {
+  console.log(chalk.red('Project name is required!'))
+  return
+}
+
+url = tpl[tplName]
+console.log('url=', url)
+
+console.log(chalk.white('\n 开始生成模板'))
+
+const spinner = ora().start()
+spinner.text = '模板下载中...'
+
+download(
+  `direct:https://github.com/Yuanbaby0077/yb-tpl.git`,
+  'test/tpl',
+  err => {
+    if (err) {
+      spinner.fail()
+      console.log(chalk.red(`Generate failed! ${err}`))
+      return
+    }
+    spinner.succeed()
+    console.log(chalk.green('\n Generate sucessfully'))
+    console.log('\n start:')
+    console.log('\n cd ${pName} \n')
+  }
+)

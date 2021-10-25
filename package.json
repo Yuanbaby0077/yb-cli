@@ -1,0 +1,33 @@
+{
+  "name": "yb-cli",
+  "version": "1.0.0",
+  "description": "yb-cli demo",
+  "main": "index.js",
+  "bin": {
+    "yb": "bin/yb",
+    "yb-add": "bin/yb-add",
+    "yb-delete": "bin/yb-delete",
+    "yb-init": "bin/yb-init",
+    "yb-list": "bin/yb-list"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuanbaby0077/yb-cli.git"
+  },
+  "author": "Yuanbaby0077",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuanbaby0077/yb-cli/issues"
+  },
+  "homepage": "https://github.com/Yuanbaby0077/yb-cli#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.3.0",
+    "download-git-repo": "^3.0.2",
+    "inquirer": "^8.2.0",
+    "ora": "^5.4.1"
+  }
+}

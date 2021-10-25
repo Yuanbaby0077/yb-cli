@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+var inquirer = require('inquirer')
+const chalk = require('chalk')
+const fs = require('fs')
+const  tpl = require(`${__dirname}/../template`)
+
+let questions = [
+  {
+    name: 'name',
+    type: 'input',
+    message: '请输入模板名称',
+    validate(val) {
+      console.log('tpl name val', val)
+      if (!val) {
+        return 'Name is required!'
+      }
+      if (tpl[val]) {
+        return 'Template has already existed!'
+      }
+      return true
+    }
+  },
+  {
+    name: 'url',
+    type: 'input',
+    message: '请输入模板地址',
+    validate(val) {
+      if (!val) return 'URL is required!'
+      return true
+    }
+  }
+]
+
+inquirer
+  .prompt(questions)
+  .then(ans => {
+    const { name, url } = ans
+    tpl[name] = url.replace(/[\u0000-\u0019]/g, '')
+    fs.writeFile(`${__dirname}/../template.json`, JSON.stringify(tpl), 'utf-8', err => {
+      if (err) {
+        console.log(err)
+      }
+      console.log('\n')
+      console.log(chalk.green('add successfully!\n'))
+      console.log(chalk.gray('the latest template list is:!\n'))
+      console.log(tpl)
+      console.log('\n')
+    })
+  })
